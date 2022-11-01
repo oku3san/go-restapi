@@ -1,6 +1,7 @@
 package main
 
 import (
+  "github.com/gorilla/mux"
   "github.com/oku3san/go-restapi/handlers"
   "log"
   "net/http"
@@ -8,14 +9,16 @@ import (
 
 func main() {
 
-  http.HandleFunc("/hello", handlers.HelloHandler)
-  http.HandleFunc("/article", handlers.PostArticleHandler)
-  http.HandleFunc("/article/list", handlers.ArticleListHandler)
-  http.HandleFunc("/article1", handlers.ArticleDetailHandler)
-  http.HandleFunc("/article/nice", handlers.PostNiceHandler)
-  http.HandleFunc("/comment", handlers.PostCommentHandler)
+  r := mux.NewRouter()
+
+  r.HandleFunc("/hello", handlers.HelloHandler)
+  r.HandleFunc("/article", handlers.PostArticleHandler)
+  r.HandleFunc("/article/list", handlers.ArticleListHandler)
+  r.HandleFunc("/article1", handlers.ArticleDetailHandler)
+  r.HandleFunc("/article/nice", handlers.PostNiceHandler)
+  r.HandleFunc("/comment", handlers.PostCommentHandler)
 
   log.Println("server start at port 8080")
-  err := http.ListenAndServe(":8080", nil)
+  err := http.ListenAndServe(":8080", r)
   log.Fatal(err)
 }
