@@ -1,6 +1,8 @@
 package main
 
 import (
+  "database/sql"
+  "fmt"
   "github.com/gorilla/mux"
   "github.com/oku3san/go-restapi/handlers"
   "log"
@@ -8,6 +10,22 @@ import (
 )
 
 func main() {
+
+  dbUser := "root"
+  dbPassword := "pass"
+  dbDatabase := "sampledb"
+  dbConn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/%s?parseTime=true", dbUser, dbPassword, dbDatabase)
+  db, err := sql.Open("mysql", dbConn)
+  if err != nil {
+    fmt.Println(err)
+  }
+  defer db.Close()
+
+  if err := db.Ping(); err != nil {
+    fmt.Println(err)
+  } else {
+    fmt.Println("connect to db")
+  }
 
   r := mux.NewRouter()
 
