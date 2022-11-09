@@ -3,6 +3,7 @@ package main
 import (
   "database/sql"
   "fmt"
+  _ "github.com/go-sql-driver/mysql"
   "github.com/gorilla/mux"
   "github.com/oku3san/go-restapi/handlers"
   "log"
@@ -37,6 +38,6 @@ func main() {
   r.HandleFunc("/comment", handlers.PostCommentHandler).Methods(http.MethodPost)
 
   log.Println("server start at port 8080")
-  err := http.ListenAndServe(":8080", r)
-  log.Fatal(err)
+  err2 := http.ListenAndServe(":8080", r)
+  log.Fatal(err2)
 }
