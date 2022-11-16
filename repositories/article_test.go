@@ -97,6 +97,10 @@ func TestInsertArticle(t *testing.T) {
      delete from articles
      where title = ? and contents = ? and username = ?
    `
+    const sqlStrForReset = `
+      ALTER TABLE articles AUTO_INCREMENT = 1;
+    `
     testDB.Exec(sqlStr, article.Title, article.Contents, article.UserName)
+    testDB.Exec(sqlStrForReset)
   })
 }
