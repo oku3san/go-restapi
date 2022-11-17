@@ -20,7 +20,7 @@ func TestSelectArticleDetail(t *testing.T) {
         Title:    "firstPost",
         Contents: "This is my first blog",
         UserName: "saki",
-        NiceNum:  3,
+        NiceNum:  15,
       },
     }, {
       testTitle: "subtest2",
@@ -98,9 +98,36 @@ func TestInsertArticle(t *testing.T) {
      where title = ? and contents = ? and username = ?
    `
     const sqlStrForReset = `
-      ALTER TABLE articles AUTO_INCREMENT = 1;
+      alter table articles AUTO_INCREMENT = 1;
     `
     testDB.Exec(sqlStr, article.Title, article.Contents, article.UserName)
     testDB.Exec(sqlStrForReset)
+  })
+}
+
+func TestUpdateNiceNum(t *testing.T) {
+  articleID := 1
+  before, err := repositories.SelectArticleDetail(testDB, articleID)
+  if err != nil {
+    t.Fatal("fail to get before data")
+  }
+
+  err = repositories.UpdateNiceNum(testDB, articleID)
+  if err != nil {
+    t.Fatal(err)
+  }
+
+  after, err := repositories.SelectArticleDetail(testDB, articleID)
+  if err != nil {
+    t.Fatal("fail to get after data")
+  }
+
+  if after.NiceNum-before.NiceNum != 1 {
+    t.Error("fail to update nice num")
+  }
+
+  t.Cleanup(func() {
+    const sqlUpdateNice = `update articles set nice = ? where article_id = ?`
+    testDB.Exec(sqlUpdateNice, before.NiceNum, articleID)
   })
 }
