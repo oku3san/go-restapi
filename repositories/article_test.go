@@ -4,6 +4,7 @@ import (
   _ "github.com/go-sql-driver/mysql"
   "github.com/oku3san/go-restapi/models"
   "github.com/oku3san/go-restapi/repositories"
+  "github.com/oku3san/go-restapi/repositories/testdata"
   "testing"
 )
 
@@ -15,22 +16,10 @@ func TestSelectArticleDetail(t *testing.T) {
   }{
     {
       testTitle: "subtest1",
-      expected: models.Article{
-        ID:       1,
-        Title:    "firstPost",
-        Contents: "This is my first blog",
-        UserName: "saki",
-        NiceNum:  15,
-      },
+      expected:  testdata.ArticleTestData[0],
     }, {
       testTitle: "subtest2",
-      expected: models.Article{
-        ID:       2,
-        Title:    "2nd",
-        Contents: "second blog post",
-        UserName: "saki",
-        NiceNum:  4,
-      },
+      expected:  testdata.ArticleTestData[1],
     },
   }
 
@@ -65,7 +54,7 @@ func TestSelectArticleDetail(t *testing.T) {
 }
 
 func TestSelectArticleList(t *testing.T) {
-  expectedNum := 5
+  expectedNum := len(testdata.ArticleTestData)
   got, err := repositories.SelectArticleList(testDB, 1)
   if err != nil {
     t.Fatal(err)
@@ -83,7 +72,7 @@ func TestInsertArticle(t *testing.T) {
     UserName: "saki",
   }
 
-  expectedArticleNum := 6
+  expectedArticleNum := 3
   newArticle, err := repositories.InsertArticle(testDB, article)
   if err != nil {
     t.Error(err)
