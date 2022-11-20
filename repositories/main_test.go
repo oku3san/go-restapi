@@ -12,9 +12,9 @@ import (
 var testDB *sql.DB
 
 var (
-  dbUser     = "root"
-  dbPassword = "pass"
-  dbDatabase = "sampledb"
+  dbUser     = os.Getenv("DBUSERNAME")
+  dbPassword = os.Getenv("DBUSERPASS")
+  dbDatabase = os.Getenv("DATABASE")
   dbConn     = fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/%s?parseTime=true", dbUser, dbPassword, dbDatabase)
 )
 
