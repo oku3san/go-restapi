@@ -23,8 +23,9 @@ func main() {
   db, err := sql.Open("mysql", dbConn)
   if err != nil {
     fmt.Println("fail to connect DB")
+    return
   }
-  defer db.Close()
+  //defer db.Close()
 
   ser := services.NewMyAppService(db)
   con := controllers.NewMyAppController(ser)
