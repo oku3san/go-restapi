@@ -3,18 +3,18 @@ package controllers
 import (
   "encoding/json"
   "github.com/gorilla/mux"
+  "github.com/oku3san/go-restapi/controllers/services"
   "github.com/oku3san/go-restapi/models"
-  "github.com/oku3san/go-restapi/services"
   "io"
   "net/http"
   "strconv"
 )
 
 type MyAppController struct {
-  service *services.MyAppService
+  service services.MyAppServicer
 }
 
-func NewMyAppController(s *services.MyAppService) *MyAppController {
+func NewMyAppController(s services.MyAppServicer) *MyAppController {
   return &MyAppController{service: s}
 }
 
