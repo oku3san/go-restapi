@@ -4,9 +4,7 @@ import (
   "database/sql"
   "fmt"
   _ "github.com/go-sql-driver/mysql"
-  "github.com/oku3san/go-restapi/controllers"
-  "github.com/oku3san/go-restapi/routers"
-  "github.com/oku3san/go-restapi/services"
+  "github.com/oku3san/go-restapi/api"
   "log"
   "net/http"
   "os"
@@ -27,9 +25,7 @@ func main() {
   }
   //defer db.Close()
 
-  ser := services.NewMyAppService(db)
-  con := controllers.NewMyAppController(ser)
-  r := routers.NewRouter(con)
+  r := api.NewRouter(db)
 
   log.Println("server start at port 8080")
   log.Fatal(http.ListenAndServe(":8080", r))
