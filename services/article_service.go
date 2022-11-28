@@ -1,6 +1,7 @@
 package services
 
 import (
+  "github.com/oku3san/go-restapi/apperrors"
   "github.com/oku3san/go-restapi/models"
   "github.com/oku3san/go-restapi/repositories"
 )
@@ -23,6 +24,7 @@ func (s *MyAppService) GetArticleService(articleID int) (models.Article, error) 
 func (s *MyAppService) PostArticleService(article models.Article) (models.Article, error) {
   newArticle, err := repositories.InsertArticle(s.db, article)
   if err != nil {
+    err = apperrors.InsertDataFailed.Wrap(err, "fail to record data")
     return models.Article{}, err
   }
   return newArticle, nil
