@@ -3,6 +3,7 @@ package controllers_test
 import (
   "database/sql"
   "fmt"
+  _ "github.com/go-sql-driver/mysql"
   "github.com/oku3san/go-restapi/controllers"
   "github.com/oku3san/go-restapi/services"
   "log"
